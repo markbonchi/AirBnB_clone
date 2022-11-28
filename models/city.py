@@ -1,13 +1,14 @@
 #!/usr/bin/python
-""" holds class Amenity"""
+""" holds class City"""
 import models
 from models.base_model import BaseModel
 
 
-class Amenity(BaseModel):
-    """Representation of Amenity"""
+class City(BaseModel):
+    """Representation of city"""
+    state_id = ""
     name = ""
 
     def __init__(self, *args, **kwargs):
-        """initializes amenity"""
+        """initializes city"""
         super().__init__(*args, **kwargs)
