@@ -8,6 +8,7 @@ import uuid
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
+
 class BaseModel:
     """
     The BaseModel class to parent subclasses
@@ -15,7 +16,7 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialization for BaseModel"""
         if kwargs:
-            for key,value in kwargs.items():
+            for key, value in kwargs.items():
                 if key != "__class__":
                     setattr(self, key, value)
             if kwargs.get("created_at", None) and type(self.created_at) is str:

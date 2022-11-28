@@ -6,11 +6,12 @@ from models.base_model import BaseModel
 
 
 class FileStorage:
-    """Class that serializes instances to JSON and deserializes JSON file to instances"""
+    """
+    Class that serializes instances to JSON and deserializes JSON
+    file to instances
+    """
 
-    #string - path to JSON file
     __file_path = "file.json"
-    #dictionary - empty but will store all objects by <class name>.id
     __objects = {}
 
     def all(self):
@@ -35,7 +36,7 @@ class FileStorage:
         try:
             with open(self.__file_path) as f:
                 json_obj = json.load(f)
-            for key in json_obj:
+            for key in json_obj.keys():
                 self.__objects[key] = classes[json_obj[key]["__class__"]](**json_obj[key])
-        except:
+        except FileNotFoundError:
             pass
