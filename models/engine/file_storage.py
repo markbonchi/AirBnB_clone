@@ -3,6 +3,7 @@
 contains the FileStorage class
 """
 import json
+from models.base_model import BaseModel
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -23,7 +24,7 @@ class FileStorage:
     """
 
     __file_path = "file.json"
-    __objects: dict = {}
+    __objects = {}
 
     def all(self):
         """all(self): returns the dictionary __objects"""
@@ -36,19 +37,17 @@ class FileStorage:
 
     def save(self):
         """Serialize __objects to the JSON file __file_path."""
-        odict = FileStorage.__objects
-        with open(FileStorage.__file_path, "w") as f:
+        odict = FileStorage.__objects.copy()
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
             json_dict = {k: v.to_dict() for k, v in odict.items()}
             f.write(json.dumps(json_dict))
 
     def reload(self):
         """deserializes the JSON file to __objects"""
         try:
-            with open(FileStorage.__file_path, "r") as f:
+            with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 json_obj = json.loads(f.read())
                 for k, v in json_obj.items():
-                    FileStorage.__objects[k] = classes[
-                                                    v["__class__"]
-                                                    ](**v)
+                    FileStorage.__objects[k] = classes[v["__class__"]](**v)
         except FileNotFoundError:
             pass
