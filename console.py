@@ -10,7 +10,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from os import args
 
 classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
@@ -20,6 +19,27 @@ class HBNBCommand(cmd.Cmd):
     """contains the entry point of the command interpreter"""
 
     prompt = "(hbnb)"
+    
+    def _key_value_parser(self, args):
+        """creates a dictionary from a list of strings"""
+        new_dict = {}
+        for arg in args:
+            if "=" in arg:
+                kvp = arg.split('=', 1)
+                key = kvp[0]
+                value = kvp[1]
+                if value[0] == value[-1] == '"':
+                    value = shlex.split(value)[0].replace('_', ' ')
+                else:
+                    try:
+                        value = int(value)
+                    except:
+                        try:
+                            value = float(value)
+                        except:
+                            continue
+                new_dict[key] = value
+        return new_dict
 
     def emptyline(self):
         """do nothing upon recieving an empty line"""
