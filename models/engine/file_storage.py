@@ -6,6 +6,10 @@ import json
 from models.base_model import BaseModel
 
 
+classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
+
 class FileStorage:
     """
     Class that serializes instances to JSON and deserializes JSON
@@ -38,6 +42,8 @@ class FileStorage:
             with open(self.__file_path) as f:
                 json_obj = json.load(f)
             for key in json_obj.keys():
-                self.__objects[key] = classes[json_obj[key]["__class__"]](**json_obj[key])
+                self.__objects[key] = classes[
+                                              json_obj[key]["__class__"]
+                                             ](**json_obj[key])
         except FileNotFoundError:
             pass
