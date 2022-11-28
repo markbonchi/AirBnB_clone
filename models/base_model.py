@@ -2,6 +2,7 @@
 """
 """
 from datetime import datetime
+import models
 import uuid
 
 
@@ -41,6 +42,7 @@ class BaseModel:
     def save(self):
         """Updates the public instance attribute updated_at"""
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of self.__dict__"""
